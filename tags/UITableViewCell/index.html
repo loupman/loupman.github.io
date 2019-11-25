@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: UITableViewCell | Hexo</title>
+  <title>Tag: UITableViewCell | Philip的个人博客</title>
   
   
 
@@ -47,7 +47,7 @@
     <cover class='cover  half'>
       
         
-  <h1 class='title'>Demo</h1>
+  <h1 class='title'>Philip的博客</h1>
 
 
   <div class="m_search">
@@ -116,7 +116,7 @@
 		<div class="nav-main container container--flex">
       <a class="logo flat-box" href='/' >
         
-          Hexo
+          Philip的个人博客
         
       </a>
 			<div class='menu navgation'>
@@ -369,7 +369,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p>今天项目中遇到了一个奇葩的事。<br>使用一下代码来设置UITableViewCell的背景颜色，却没有设置成功。依然是赤裸`裸挑衅的白色。</p>
+      <p>今天项目中遇到了一个奇葩的事。<br>使用一下代码来设置UITableViewCell的背景颜色，却没有设置成功。依然是赤裸~裸挑衅的白色。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    CXXImageTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CXXImageTableCellIdentify];</span><br><span class="line">    if (!cell) &#123;</span><br><span class="line">        cell = [[CXXImageTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CXXImageTableCellIdentify];</span><br><span class="line">        cell.selectionStyle = UITableViewCellSelectionStyleNone;</span><br><span class="line">        cell.accessoryType = UITableViewCellAccessoryNone;</span><br><span class="line">        cell.contentView.backgroundColor = [UIColor clearColor];</span><br><span class="line">    &#125;</span><br><span class="line">    NSString *imgName = [NSString stringWithFormat:@&quot;introductions_cards_0%ld&quot;, indexPath.section + 1];</span><br><span class="line">    cell.imgView.image = [UIImage imageNamed:imgName];</span><br><span class="line">    </span><br><span class="line">    return cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
         <div class="readmore">

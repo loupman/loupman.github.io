@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>iOS－Realm 初试笔记 | Hexo</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.10.22/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Demo</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Hexo
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2016/09/01/2016-09-01-lets-try-realm/">
+        iOS－Realm 初试笔记
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://yoursite.com" rel="nofollow">
+        
+          <i class="fas fa-user" aria-hidden="true"></i>
+        
+        <p>Philip.Lee</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2016-09-01</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/iOS/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>iOS</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>官网文档地址：<a href="https://realm.io/docs/objc/latest" target="_blank" rel="noopener">https://realm.io/docs/objc/latest</a><br>Realm牛刀小试，做下笔记。 主要针对Realm的增删改查。<br>Realm主要的作用就是对象持久化。以对象来持久化数据。<br>查看Realm数据库工具：<a href="https://itunes.apple.com/cn/app/realm-browser/id1007457278" target="_blank" rel="noopener">Realm Browser</a><br>之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。</p>
+<a id="more"></a>
+
+<p>Demo中所有数据使用知乎的一个API（<a href="http://news-at.zhihu.com/api/4/news/latest）（来源网上）" target="_blank" rel="noopener">http://news-at.zhihu.com/api/4/news/latest）（来源网上）</a><br>// 数据模型 PLStory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@interface PLStory :RLMObject</span><br><span class="line"></span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (strong, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// implementation</span><br><span class="line">@implementation PLStory</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h3 id="增加数据"><a href="#增加数据" class="headerlink" title="增加数据"></a>增加数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for (PLStory *story in weakSelf.data) &#123;</span><br><span class="line">    RLMRealm *realm = [RLMRealm defaultRealm];</span><br><span class="line">    </span><br><span class="line">    __weak RLMRealm *rlm = realm;</span><br><span class="line">    [realm transactionWithBlock:^&#123;</span><br><span class="line">        [rlm addObject:story];</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果需要已经存在的数据需要更新的，则可以使用API <code>addOrUpdateObject:</code> 或者 <code>addOrUpdateObjectsFromArray:</code> ，但是这两个API需要主键支持。 同时需要设置 <code>migrationBlock</code>。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 1;</span><br><span class="line"></span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 必须重新设置`defaultConfiguration`</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br><span class="line"></span><br><span class="line">// 设置主键。 在 implementation 中实现</span><br><span class="line">+(NSString *)primaryKey</span><br><span class="line">&#123;</span><br><span class="line">    return @&quot;uid&quot;; // 返回需要设置主键的属性名字</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，Realm不支持联合主键。但是可以新增加一个属性，值为联合主键的合并值。</p>
+<p>同时这牵扯到一个大问题。随着版本的迭代，需求的变动。这个类有可能需要增／删／改一些属性字段。则我们需要利用<code>migrationBlock</code>来更新。 同时如果有改动，则每次都需要更新  <code>RLMRealmConfiguration</code> 的 <code>schemaVersion</code>属性。 以下我列举了一些常用的更新schema的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">// 以下代码都设置uid为主键</span><br><span class="line">// V1</span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (copy, nonatomic) NSString *images;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@property (assign, nonatomic) int type;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> V2  </span><br><span class="line"> 在V1的基础上变动： 改变字段 images 为 image ; 删除字段 type</span><br><span class="line"> **/</span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (copy, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// V2 对应的 Migration</span><br><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 2;</span><br><span class="line">        </span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line"></span><br><span class="line">	//没有及时更新APP。 当你的 schemaVersion＝4 时，用户还没有更新 schemaVersion＝2 的版本</span><br><span class="line">	/** </span><br><span class="line">	   images 字段名被更改为 image ；字段 type 被删除</span><br><span class="line">	**/</span><br><span class="line">    if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">        [migration enumerateObjects:PLStory.className block:^(RLMObject *oldObject, RLMObject *newObject) &#123;</span><br><span class="line">            if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">                newObject[@&quot;image&quot;] = oldObject[@&quot;images&quot;];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 这一句是关键，必须重新设置为默认设置</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> V3  </span><br><span class="line"> 增加一个对象</span><br><span class="line"> **/</span><br><span class="line">@interface PLFollower :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *name;</span><br><span class="line">@property (assign, nonatomic) int age;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">RLM_ARRAY_TYPE(PLFollower)</span><br><span class="line"></span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (strong, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@property (strong, nonatomic) RLMArray&lt;PLFollower&gt; *followers;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (copy, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// V3 对应的Migration</span><br><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 3;</span><br><span class="line">        </span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line">    //没有及时更新APP。 当你的 schemaVersion＝4 时，用户还没有更新 schemaVersion＝3 的版本</span><br><span class="line">	/** </span><br><span class="line">	   images 字段名被更改为 image ；字段 type 被删除</span><br><span class="line">	**/</span><br><span class="line">    if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">        [migration enumerateObjects:PLStory.className block:^(RLMObject *oldObject, RLMObject *newObject) &#123;</span><br><span class="line">            if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">                newObject[@&quot;image&quot;] = oldObject[@&quot;images&quot;];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    // schemaVersion = 3 新增加一个  followers 属性</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 这一句是关键，必须重新设置为默认设置</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br></pre></td></tr></table></figure>
+
+<p>所以增加或者删除一个字段，则不需要做任何操作，但是更改一个字段名字，因为关联了之前的数据。所以需要做一些数据转换。</p>
+<p>Realm中，RLMObject提供了通过NSDictionary或者NSArray来增加或者更新数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)createOrUpdateInRealm:(RLMRealm *)realm withValue:(id)value</span><br><span class="line">+ (instancetype)createOrUpdateInDefaultRealmWithValue:(id)value</span><br><span class="line">+ (instancetype)createInRealm:(RLMRealm *)realm withValue:(id)value</span><br><span class="line">+ (instancetype)createInDefaultRealmWithValue:(id)value</span><br></pre></td></tr></table></figure>
+
+<p>支持数据为NSNull，如果数据为NSNull时，则更新数据为空。前面两个需要先设置主键</p>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><p>删除数据时，必须放在 transactionWithBlock中，否者无法删除数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">RLMResults *res = [PLStory allObjects];</span><br><span class="line">NSMutableArray *arr = [@[] mutableCopy];</span><br><span class="line">for (PLStory *story in res) &#123;</span><br><span class="line">    if (story.uid == 8761556) &#123;</span><br><span class="line">        __weak RLMRealm *rlm = res.realm;</span><br><span class="line">        [rlm transactionWithBlock:^&#123;</span><br><span class="line">            [rlm deleteObject:story];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [arr addObject:story];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者 <code>deleteAllObjects</code> 删除所有数据。</p>
+<h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><p>更新时，必须放在 transactionWithBlock中，否者无法更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">RLMResults *res = [PLStory allObjects];</span><br><span class="line">NSMutableArray *arr = [@[] mutableCopy];</span><br><span class="line">for (PLStory *story in res) &#123;</span><br><span class="line">    if (story.uid == 8761556) &#123;</span><br><span class="line">        [res.realm transactionWithBlock:^&#123;  //</span><br><span class="line">            story.title = @&quot;------changed-------&quot;;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    [arr addObject:story];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><p>查询一个对象的所有数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RLMResults&lt;PLStory *&gt; *res = [PLStory allObjects];</span><br></pre></td></tr></table></figure>
+
+<p>在项目有需要直接过滤写数据。Realm中使用了 <code>NSPredicate</code>作为参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 通过`where`语句 查询</span><br><span class="line">RLMResults&lt;PLStory *&gt; *stories = [PLStory objectsWhere:@&quot;uid = 8761556&quot;];</span><br><span class="line"></span><br><span class="line">// 使用 NSPredicate 查询</span><br><span class="line">NSPredicate *pred = [NSPredicate predicateWithFormat:@&quot;title BEGINSWITH ％@ AND image BEGINSWITH ％@&quot;,</span><br><span class="line">                                                     @&quot;好&quot;, @&quot;http:&quot;];</span><br><span class="line">stories = [PLStory objectsWithPredicate:pred];</span><br></pre></td></tr></table></figure>
+
+<p>官网上列举了查询的比较<br>Realm supports many common predicates:</p>
+<ul>
+<li>The comparison operands can be property names or constants. At least one of the operands must be a property name.</li>
+<li>The comparison operators ==, &lt;=, &lt;, &gt;=, &gt;, !=, and BETWEEN are supported for int, long, long long, float, double, and NSDate property types. Such as age == 45</li>
+<li>Identity comparisons ==, !=, e.g. [Employee objectsWhere:@”company == %@”, company]</li>
+<li>The comparison operators == and != are supported for boolean properties.</li>
+<li>For NSString and NSData properties, we support the ==, !=, BEGINSWITH, CONTAINS, and ENDSWITH operators, such as name CONTAINS ‘Ja’</li>
+<li>Case insensitive comparisons for strings, such as name CONTAINS[c] ‘Ja’. Note that only characters “A-Z” and “a-z” will be ignored for case.</li>
+<li>Realm supports the following compound operators: “AND”, “OR”, and “NOT”. Such as name BEGINSWITH ‘J’ AND age &gt;= 32</li>
+<li>The containment operand IN such as name IN {‘Lisa’, ‘Spike’, ‘Hachi’}</li>
+<li>Nil comparisons ==, !=, e.g. [Company objectsWhere:@”ceo == nil”]. Note that Realm treats nil as a special value rather than the absence of a value, so unlike with SQL nil equals itself.</li>
+<li>ANY comparisons, such as ANY student.age &lt; 21</li>
+<li>The aggregate expressions @count, @min, @max, @sum and @avg are supported on RLMArray and RLMResults properties, e.g. [Company objectsWhere:@”employees.@count &gt; 5”] to find all companies with more than five employees.</li>
+<li>Subqueries are supported with the following limitations:</li>
+<li>@count is the only operator that may be applied to the SUBQUERY expression.</li>
+<li>The SUBQUERY(…).@count expression must be compared with a constant.</li>
+<li>Correlated subqueries are not yet supported.</li>
+</ul>
+<p>详细参考：<a href="https://realm.io/docs/objc/latest/api/Classes/RLMObject.html#//api/name/objectsWhere:" target="_blank" rel="noopener">[RLMObject objectsWhere:]</a></p>
+<ul>
+<li>另外<br><code>RLMResults</code>是一个自动更新结果数据结构。 如下更改数据后，<code>RLMResults</code>会自动相应更新<br>例如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RLMResults&lt;Dog *&gt; *puppies = [Dog objectsInRealm:realm where:@&quot;age &lt; 2&quot;];</span><br><span class="line">puppies.count; // =&gt; 0</span><br><span class="line"></span><br><span class="line">[realm transactionWithBlock:^&#123;</span><br><span class="line">  [Dog createInRealm:realm withValue:@&#123;@&quot;name&quot;: @&quot;Fido&quot;, @&quot;age&quot;: @1&#125;];</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">puppies.count; // =&gt; 1</span><br></pre></td></tr></table></figure>
+
+<p>遇到的错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016-09-06 11:23:21.596 TestRealm[6092:924914] *** Terminating app due to uncaught exception &apos;RLMException&apos;, reason: &apos;Migration is required due to the following errors:</span><br><span class="line">- Property &apos;uid&apos; has been made a primary key.&apos;</span><br></pre></td></tr></table></figure>
+
+<p>这个错误一般是要设置Migration</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 2;</span><br><span class="line">        </span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 这一句是关键，必须重新设置为默认设置</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br></pre></td></tr></table></figure>
+
+
+<p><a href="https://github.com/loupman/TestRealm.git" target="_blank" rel="noopener">项目链接</a></p>
+
+      </div>
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-25T14:30:51+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Nov 25, 2019</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>数据持久化</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Realm/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>Realm</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/09/01/2016-09-01-lets-try-realm/&title=iOS－Realm 初试笔记 | Hexo&summary=官网文档地址：https://realm.io/docs/objc/latestRealm牛刀小试，做下笔记。 主要针对Realm的增删改查。Realm主要的作用就是对象持久化。以对象来持久化数据。查看Realm数据库工具：Realm Browser之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2016/09/01/2016-09-01-lets-try-realm/&title=iOS－Realm 初试笔记 | Hexo&summary=官网文档地址：https://realm.io/docs/objc/latestRealm牛刀小试，做下笔记。 主要针对Realm的增删改查。Realm主要的作用就是对象持久化。以对象来持久化数据。查看Realm数据库工具：Realm Browser之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/09/01/2016-09-01-lets-try-realm/&title=iOS－Realm 初试笔记 | Hexo&summary=官网文档地址：https://realm.io/docs/objc/latestRealm牛刀小试，做下笔记。 主要针对Realm的增删改查。Realm主要的作用就是对象持久化。以对象来持久化数据。查看Realm数据库工具：Realm Browser之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/2017/05/03/2017-05-03-ios-keychain-deviceid/" rel="prev" title="iOS10.3使用keychain存取deviceID">
+                                
+                                    iOS10.3使用keychain存取deviceID
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/iOS10-3/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> iOS10.3</a> <a class="tag" href="/tags/keychain/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> keychain</a> <a class="tag" href="/tags/deviceId/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> deviceId</a> <a class="tag" href="/tags/uuid/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> uuid</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2016/08/22/2016-08-22-set-uitableviewcell-background-under-plain-mode/" rel="prev" title="UITableViewStylePlain下，UITableViewCell设置背景颜色没有效果">
+                                  
+                                      UITableViewStylePlain下，UITableViewCell设置背景颜色没有效果
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/%E6%95%88%E6%9E%9C%E8%AE%BE%E7%BD%AE/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 效果设置</a> <a class="tag" href="/tags/UITableViewCell/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> UITableViewCell</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'iOS－Realm 初试笔记',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/avatar/avatar.png'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/mailto:me@xaoxuu.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/xaoxuu"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=63035382"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer noopener" href="javascript:void(0)" target="_blank"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#增加数据"><span class="toc-text">增加数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除数据"><span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新数据"><span class="toc-text">更新数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询数据"><span class="toc-text">查询数据</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/material-x/" href="https://xaoxuu.com/wiki/material-x/"
+          
+            rel="nofollow"
+          
+          
+          id="https:xaoxuu.comwikimaterial-x">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Categories</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Python/" href="/categories/Python/"><div class='name'>Python</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/Swift/" href="/categories/Swift/"><div class='name'>Swift</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/iOS/" href="/categories/iOS/"><div class='name'>iOS</div><div class='badge'>(10)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/a/" style="font-size: 14px; color: #999">.a</a> <a href="/tags/framework/" style="font-size: 14px; color: #999">.framework</a> <a href="/tags/KVO/" style="font-size: 24px; color: #555">KVO</a> <a href="/tags/Python/" style="font-size: 24px; color: #555">Python</a> <a href="/tags/Python2-7/" style="font-size: 24px; color: #555">Python2.7</a> <a href="/tags/Python%E5%87%BD%E6%95%B0/" style="font-size: 14px; color: #999">Python函数</a> <a href="/tags/Python%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" style="font-size: 14px; color: #999">Python基本数据类型</a> <a href="/tags/Python%E6%A8%A1%E5%9D%97/" style="font-size: 14px; color: #999">Python模块</a> <a href="/tags/QQ%E5%85%AC%E4%BC%97%E5%8F%B7%E8%81%8A%E5%A4%A9/" style="font-size: 14px; color: #999">QQ公众号聊天</a> <a href="/tags/Realm/" style="font-size: 14px; color: #999">Realm</a> <a href="/tags/Swift/" style="font-size: 24px; color: #555">Swift</a> <a href="/tags/UITableViewCell/" style="font-size: 14px; color: #999">UITableViewCell</a> <a href="/tags/deviceId/" style="font-size: 14px; color: #999">deviceId</a> <a href="/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/tags/iOS-Crash/" style="font-size: 14px; color: #999">iOS Crash</a> <a href="/tags/iOS10-3/" style="font-size: 14px; color: #999">iOS10.3</a> <a href="/tags/iOS%E5%B4%A9%E6%BA%83/" style="font-size: 14px; color: #999">iOS崩溃</a> <a href="/tags/iOS%E9%97%AA%E9%80%80/" style="font-size: 14px; color: #999">iOS闪退</a> <a href="/tags/ipa%E7%A0%B8%E5%A3%B3/" style="font-size: 14px; color: #999">ipa砸壳</a> <a href="/tags/keychain/" style="font-size: 14px; color: #999">keychain</a> <a href="/tags/protobuf/" style="font-size: 14px; color: #999">protobuf</a> <a href="/tags/uuid/" style="font-size: 14px; color: #999">uuid</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 14px; color: #999">动态库</a> <a href="/tags/%E6%89%8B%E5%8A%A8%E7%AC%A6%E5%8F%B7%E5%8C%96/" style="font-size: 14px; color: #999">手动符号化</a> <a href="/tags/%E6%8B%86%E5%8C%85%E8%A7%A3%E5%8C%85/" style="font-size: 14px; color: #999">拆包解包</a> <a href="/tags/%E6%95%88%E6%9E%9C%E8%AE%BE%E7%BD%AE/" style="font-size: 14px; color: #999">效果设置</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 14px; color: #999">数据持久化</a> <a href="/tags/%E6%9E%9A%E4%B8%BE/" style="font-size: 14px; color: #999">枚举</a> <a href="/tags/%E7%B1%BB/" style="font-size: 14px; color: #999">类</a> <a href="/tags/%E7%BB%93%E6%9E%84%E4%BD%93/" style="font-size: 14px; color: #999">结构体</a> <a href="/tags/%E8%B0%83%E7%94%A8%E6%89%8B%E6%9C%BAQQ/" style="font-size: 14px; color: #999">调用手机QQ</a> <a href="/tags/%E8%B0%83%E8%AF%95%E5%BE%AE%E4%BF%A1/" style="font-size: 14px; color: #999">调试微信</a> <a href="/tags/%E9%9D%99%E6%80%81%E5%BA%93/" style="font-size: 14px; color: #999">静态库</a>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget list'>
+  
+<header class='pure'>
+  <div><i class="fas fa-thumbs-up fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;强烈推荐</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="entry">
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/hexo.sh/" href="https://xaoxuu.com/wiki/hexo.sh/"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;Hexo脚本（Mac）
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/vim-cn.sh/" href="https://xaoxuu.com/wiki/vim-cn.sh/"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;图床脚本（Mac）
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://yasuotu.com" href="https://yasuotu.com"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;图片在线压缩
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://realfavicongenerator.net" href="https://realfavicongenerator.net"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;生成Favicon
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://mxclub.github.io/resume/" href="https://mxclub.github.io/resume/"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;简历主题
+          </div>
+          
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/mailto:me@xaoxuu.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/xaoxuu"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=63035382"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+  <div>
+    Use
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    as theme
+    
+      , 
+      total visits
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      times
+    
+    . 
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

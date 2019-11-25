@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Python基本入门和基本数据类型介绍 | Philip的个人博客</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.10.22/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Philip的博客</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Philip的个人博客
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2017/05/17/2017-05-17-python-base-information/">
+        Python基本入门和基本数据类型介绍
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://yoursite.com" rel="nofollow">
+        
+          <i class="fas fa-user" aria-hidden="true"></i>
+        
+        <p>Philip.Lee</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2017-05-17</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Python/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Python</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <h3 id="基础："><a href="#基础：" class="headerlink" title="基础："></a>基础：</h3><p><code>print</code> ， 使用<code>,</code>表示不换行，否则会自动换行<br>多行，和OC一样，可以使用 <code>\</code> 进行换行连接<br>字符串： 单引号，多引号和三引号 <code>&#39;</code>,<code>&quot;</code>, <code>&#39;&#39;&#39; 或 &quot;&quot;&quot;</code>. 三引号可以是多行<br>注释： 单行注释使用<code>#</code>， 多行使用三引号 <code>&#39;&#39;&#39; 或 &quot;&quot;&quot;</code><br>pass： 不执行任何语句，只是使代码有格式</p>
+<a id="more"></a>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flag = <span class="literal">True</span></span><br><span class="line"><span class="keyword">if</span> flag :</span><br><span class="line">   <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">   <span class="comment">#do somthing</span></span><br></pre></td></tr></table></figure>
+<p>帮助： 可以使用 <code>help（命令）</code> 来获取命令的帮助信息。获取一个模块中的所有函数名字可以使用 <code>dir(模块)</code></p>
+<h3 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h3><h4 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h4><ol>
+<li>int （有符号整型） (最大19位)</li>
+<li>long（长整型[也可以代表八进制和十六进制])</li>
+<li>float（浮点型）</li>
+<li>complex（复数）</li>
+</ol>
+<h4 id="字符串-所有函数在模块string中"><a href="#字符串-所有函数在模块string中" class="headerlink" title="字符串  所有函数在模块string中"></a>字符串  所有函数在模块string中</h4><p>** 字符串相连 <code>+</code>, <code>*</code>（表示输出多个相同字符串)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">"lh"</span>*<span class="number">2</span></span><br><span class="line"><span class="string">'lhlh'</span></span><br></pre></td></tr></table></figure>
+
+<p>** 获取特定字符串字符** </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>str = <span class="string">"welcome to python!"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str[<span class="number">0</span>:]</span><br><span class="line"><span class="string">'welcome to python!'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str[<span class="number">-2</span>:<span class="number">-1</span>]</span><br><span class="line"><span class="string">'n'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str[<span class="number">-2</span>:<span class="number">0</span>]</span><br><span class="line"><span class="string">''</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str[<span class="number">-1</span>]</span><br><span class="line"><span class="string">'!'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str[:<span class="number">-1</span>]  <span class="comment"># 反方向输出，-1 为最后一个字符</span></span><br><span class="line"><span class="string">'welcome to python'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str[<span class="number">0</span>:]  <span class="comment"># 正向以0开始</span></span><br><span class="line"><span class="string">'welcome to python!'</span></span><br></pre></td></tr></table></figure>
+
+<p>** 包含字符串 <code>in</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>flag = <span class="string">'welcome'</span> <span class="keyword">in</span> str</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> flag</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>** 字符串不转义 <code>r/R</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'welcome \n to python!'</span></span><br><span class="line">welcome </span><br><span class="line"> to python!</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">r'welcome \n to python!'</span>  <span class="comment"># 在字符串前面添加R/r</span></span><br><span class="line">welcome \n to python!</span><br></pre></td></tr></table></figure>
+
+<p>** 格式化字符串 %</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">"welcome to %s"</span> % <span class="string">'python'</span></span><br><span class="line">welcome to python</span><br></pre></td></tr></table></figure>
+<p>格式化符号</p>
+<ul>
+<li>%c     格式化字符及其ASCII码</li>
+<li>%s     格式化字符串</li>
+<li>%d     格式化整数</li>
+<li>%u     格式化无符号整型</li>
+<li>%o     格式化无符号八进制数</li>
+<li>%x     格式化无符号十六进制数</li>
+<li>%X     格式化无符号十六进制数（大写）</li>
+<li>%f     格式化浮点数字，可指定小数点后的精度</li>
+<li>%e     用科学计数法格式化浮点数</li>
+<li>%E     作用同%e，用科学计数法格式化浮点数</li>
+<li>%g     %f和%e的简写</li>
+<li>%G     %f 和 %E 的简写</li>
+<li>%p     用十六进制数格式化变量的地址</li>
+<li>%%     输出一个单一的’%’</li>
+</ul>
+<h3 id="列表-使用-表示-所有函数包含在-list模块"><a href="#列表-使用-表示-所有函数包含在-list模块" class="headerlink" title="列表 使用[]表示 所有函数包含在 list模块"></a>列表 使用<code>[]</code>表示 所有函数包含在 list模块</h3><p>一个可变的数组，可以增删改查，支持+运算(合并两个列表)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list = [x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>,<span class="number">20</span>, <span class="number">4</span>)]  <span class="comment">#快速构建一个列表，range前包后不包含，4为递增</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> list</span><br><span class="line">[<span class="number">2</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">14</span>, <span class="number">18</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> list[<span class="number">3</span>]  		<span class="comment">#删除下表为3，第四个元素</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list</span><br><span class="line">[<span class="number">2</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">18</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list.append(<span class="number">20</span>)  	<span class="comment">#追加一个 20的元素</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list</span><br><span class="line">[<span class="number">2</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">18</span>, <span class="number">20</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list.insert(<span class="number">2</span>, <span class="number">8</span>)  	<span class="comment">#在下表为2插入一个元素</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list</span><br><span class="line">[<span class="number">2</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">18</span>, <span class="number">20</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>max(list)          	<span class="comment">#获取最大的元素</span></span><br><span class="line"><span class="number">20</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>len(list)          	<span class="comment">#获取列表长度</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list[<span class="number">2</span>:]			<span class="comment">#下表为2开始到结束的所有元素</span></span><br><span class="line">[<span class="number">8</span>, <span class="number">10</span>, <span class="number">18</span>, <span class="number">20</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list[:<span class="number">-2</span>]			<span class="comment">#最后一个为-1， 这种取值都是前包后不包含</span></span><br><span class="line">[<span class="number">2</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>]</span><br></pre></td></tr></table></figure>
+<p>创建二位数组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list_2d = [[col <span class="keyword">for</span> col <span class="keyword">in</span> range(<span class="number">4</span>)] <span class="keyword">for</span> row <span class="keyword">in</span> range(<span class="number">3</span>)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>元组和列表的区别是，元组是不可变的。一旦生成，不能增删改。如果在程序中以列表的形式传递一个对象的集合，它可能在任何地方改变；如果使用元组的话，则不能。<br>因为括号<code>()</code>既可以表示tuple，又可以表示数学公式中的小括号。 所以，如果元组只有1个元素，就必须加一个逗号，防止被当作括号运算.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>single = (<span class="string">"one"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> single</span><br><span class="line">one</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>single = (<span class="string">"one"</span>,)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> single</span><br><span class="line">(<span class="string">'one'</span>,)</span><br></pre></td></tr></table></figure>
+
+<p>如果需要快速创建元组，可以先创建一个列表，再转为元组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list = [x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>,<span class="number">20</span>, <span class="number">4</span>)]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tup = tuple(list)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> tup</span><br><span class="line">(<span class="number">2</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">14</span>, <span class="number">18</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a>时间格式化</h3><p>python的时间是在模块time中，可以使用<code>dir(time)</code>查看所有有关time的函数。使用的时候，必须先导入时间模块，引入时间模块<code>import time</code><br>获取时间戳： <code>time.time()</code> 以秒为单位，float 类型<br>值得一提的函数：<code>time.localtime()</code> 返回的是一个结构类型的时间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.localtime()</span><br><span class="line">time.struct_time(tm_year=<span class="number">2017</span>, tm_mon=<span class="number">5</span>, tm_mday=<span class="number">17</span>, tm_hour=<span class="number">11</span>, tm_min=<span class="number">49</span>, tm_sec=<span class="number">2</span>, tm_wday=<span class="number">2</span>, tm_yday=<span class="number">137</span>, tm_isdst=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>格式化时间： </p>
+<ul>
+<li>%y 两位数的年份表示（00-99）</li>
+<li>%Y 四位数的年份表示（000-9999）</li>
+<li>%m 月份（01-12）</li>
+<li>%d 月内中的一天（0-31）</li>
+<li>%H 24小时制小时数（0-23）</li>
+<li>%I 12小时制小时数（01-12）</li>
+<li>%M 分钟数（00=59）</li>
+<li>%S 秒（00-59）</li>
+<li>%a 本地简化星期名称</li>
+<li>%A 本地完整星期名称</li>
+<li>%b 本地简化的月份名称</li>
+<li>%B 本地完整的月份名称</li>
+<li>%c 本地相应的日期表示和时间表示</li>
+<li>%j 年内的一天（001-366）</li>
+<li>%p 本地A.M.或P.M.的等价符</li>
+<li>%U 一年中的星期数（00-53）星期天为星期的开始</li>
+<li>%w 星期（0-6），星期天为星期的开始</li>
+<li>%W 一年中的星期数（00-53）星期一为星期的开始</li>
+<li>%x 本地相应的日期表示</li>
+<li>%X 本地相应的时间表示</li>
+<li>%Z 当前时区的名称</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime()) </span><br><span class="line"><span class="number">2017</span><span class="number">-05</span><span class="number">-17</span> <span class="number">11</span>:<span class="number">55</span>:<span class="number">00</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> time.strftime(<span class="string">"%a %b %d %H:%M:%S %Y"</span>, time.localtime()) </span><br><span class="line">Wed May <span class="number">17</span> <span class="number">11</span>:<span class="number">54</span>:<span class="number">49</span> <span class="number">2017</span></span><br></pre></td></tr></table></figure>
+
+<p>解析时间字符串位时间元组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#string -- 时间字符串。</span></span><br><span class="line"><span class="comment">#format -- 格式化字符串。</span></span><br><span class="line">time.strptime(string[, format])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.strptime(<span class="string">"2016-03-04"</span>, <span class="string">'%Y-%m-%d'</span>)</span><br><span class="line">time.struct_time(tm_year=<span class="number">2016</span>, tm_mon=<span class="number">3</span>, tm_mday=<span class="number">4</span>, tm_hour=<span class="number">0</span>, tm_min=<span class="number">0</span>, tm_sec=<span class="number">0</span>, tm_wday=<span class="number">4</span>, tm_yday=<span class="number">64</span>, tm_isdst=<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+      </div>
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-25T19:16:34+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Nov 25, 2019</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python2-7/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>Python2.7</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>Python基本数据类型</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/05/17/2017-05-17-python-base-information/&title=Python基本入门和基本数据类型介绍 | Philip的个人博客&summary=基础：print ， 使用,表示不换行，否则会自动换行多行，和OC一样，可以使用 \ 进行换行连接字符串： 单引号，多引号和三引号 &#39;,&quot;, &#39;&#39;&#39; 或 &quot;&quot;&quot;. 三引号可以是多行注释： 单行注释使用#， 多行使用三引号 &#39;&#39;&#39; 或 &quot;&quot;&quot;pass： 不执行任何语句，只是使代码有格式"
+          
+          >
+          
+            <img src="http://loupman.com/images/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2017/05/17/2017-05-17-python-base-information/&title=Python基本入门和基本数据类型介绍 | Philip的个人博客&summary=基础：print ， 使用,表示不换行，否则会自动换行多行，和OC一样，可以使用 \ 进行换行连接字符串： 单引号，多引号和三引号 &#39;,&quot;, &#39;&#39;&#39; 或 &quot;&quot;&quot;. 三引号可以是多行注释： 单行注释使用#， 多行使用三引号 &#39;&#39;&#39; 或 &quot;&quot;&quot;pass： 不执行任何语句，只是使代码有格式"
+          
+          >
+          
+            <img src="http://loupman.com/images/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-wechat" title="微信" rel="external nofollow noopener noreferrer"
+          
+          >
+          
+            <img src="http://loupman.com/images/wechat.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/05/17/2017-05-17-python-base-information/&title=Python基本入门和基本数据类型介绍 | Philip的个人博客&summary=基础：print ， 使用,表示不换行，否则会自动换行多行，和OC一样，可以使用 \ 进行换行连接字符串： 单引号，多引号和三引号 &#39;,&quot;, &#39;&#39;&#39; 或 &quot;&quot;&quot;. 三引号可以是多行注释： 单行注释使用#， 多行使用三引号 &#39;&#39;&#39; 或 &quot;&quot;&quot;pass： 不执行任何语句，只是使代码有格式"
+          
+          >
+          
+            <img src="http://loupman.com/images/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/2017/05/22/2017-05-22-python-advanced-usage-function-module/" rel="prev" title="Python高级，函数和模块介绍及应用">
+                                
+                                    Python高级，函数和模块介绍及应用
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/Python/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> Python</a> <a class="tag" href="/tags/Python2-7/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> Python2.7</a> <a class="tag" href="/tags/Python%E5%87%BD%E6%95%B0/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> Python函数</a> <a class="tag" href="/tags/Python%E6%A8%A1%E5%9D%97/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> Python模块</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2017/05/03/2017-05-03-ios-keychain-deviceid/" rel="prev" title="iOS10.3使用keychain存取deviceID">
+                                  
+                                      iOS10.3使用keychain存取deviceID
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/iOS10-3/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> iOS10.3</a> <a class="tag" href="/tags/keychain/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> keychain</a> <a class="tag" href="/tags/deviceId/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> deviceId</a> <a class="tag" href="/tags/uuid/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> uuid</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'Python基本入门和基本数据类型介绍',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/avatar/avatar.png'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/mailto:me@xaoxuu.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/xaoxuu"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=63035382"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer noopener" href="javascript:void(0)" target="_blank"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础："><span class="toc-text">基础：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本类型"><span class="toc-text">基本类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数字类型"><span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串-所有函数在模块string中"><span class="toc-text">字符串  所有函数在模块string中</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表-使用-表示-所有函数包含在-list模块"><span class="toc-text">列表 使用[]表示 所有函数包含在 list模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元组"><span class="toc-text">元组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间格式化"><span class="toc-text">时间格式化</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/material-x/" href="https://xaoxuu.com/wiki/material-x/"
+          
+            rel="nofollow"
+          
+          
+          id="https:xaoxuu.comwikimaterial-x">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Categories</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Python/" href="/categories/Python/"><div class='name'>Python</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/Swift/" href="/categories/Swift/"><div class='name'>Swift</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/iOS/" href="/categories/iOS/"><div class='name'>iOS</div><div class='badge'>(10)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/a/" style="font-size: 14px; color: #999">.a</a> <a href="/tags/framework/" style="font-size: 14px; color: #999">.framework</a> <a href="/tags/KVO/" style="font-size: 24px; color: #555">KVO</a> <a href="/tags/Python/" style="font-size: 24px; color: #555">Python</a> <a href="/tags/Python2-7/" style="font-size: 24px; color: #555">Python2.7</a> <a href="/tags/Python%E5%87%BD%E6%95%B0/" style="font-size: 14px; color: #999">Python函数</a> <a href="/tags/Python%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" style="font-size: 14px; color: #999">Python基本数据类型</a> <a href="/tags/Python%E6%A8%A1%E5%9D%97/" style="font-size: 14px; color: #999">Python模块</a> <a href="/tags/QQ%E5%85%AC%E4%BC%97%E5%8F%B7%E8%81%8A%E5%A4%A9/" style="font-size: 14px; color: #999">QQ公众号聊天</a> <a href="/tags/Realm/" style="font-size: 14px; color: #999">Realm</a> <a href="/tags/Swift/" style="font-size: 24px; color: #555">Swift</a> <a href="/tags/UITableViewCell/" style="font-size: 14px; color: #999">UITableViewCell</a> <a href="/tags/deviceId/" style="font-size: 14px; color: #999">deviceId</a> <a href="/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/tags/iOS-Crash/" style="font-size: 14px; color: #999">iOS Crash</a> <a href="/tags/iOS10-3/" style="font-size: 14px; color: #999">iOS10.3</a> <a href="/tags/iOS%E5%B4%A9%E6%BA%83/" style="font-size: 14px; color: #999">iOS崩溃</a> <a href="/tags/iOS%E9%97%AA%E9%80%80/" style="font-size: 14px; color: #999">iOS闪退</a> <a href="/tags/ipa%E7%A0%B8%E5%A3%B3/" style="font-size: 14px; color: #999">ipa砸壳</a> <a href="/tags/keychain/" style="font-size: 14px; color: #999">keychain</a> <a href="/tags/protobuf/" style="font-size: 14px; color: #999">protobuf</a> <a href="/tags/uuid/" style="font-size: 14px; color: #999">uuid</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 14px; color: #999">动态库</a> <a href="/tags/%E6%89%8B%E5%8A%A8%E7%AC%A6%E5%8F%B7%E5%8C%96/" style="font-size: 14px; color: #999">手动符号化</a> <a href="/tags/%E6%8B%86%E5%8C%85%E8%A7%A3%E5%8C%85/" style="font-size: 14px; color: #999">拆包解包</a> <a href="/tags/%E6%95%88%E6%9E%9C%E8%AE%BE%E7%BD%AE/" style="font-size: 14px; color: #999">效果设置</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 14px; color: #999">数据持久化</a> <a href="/tags/%E6%9E%9A%E4%B8%BE/" style="font-size: 14px; color: #999">枚举</a> <a href="/tags/%E7%B1%BB/" style="font-size: 14px; color: #999">类</a> <a href="/tags/%E7%BB%93%E6%9E%84%E4%BD%93/" style="font-size: 14px; color: #999">结构体</a> <a href="/tags/%E8%B0%83%E7%94%A8%E6%89%8B%E6%9C%BAQQ/" style="font-size: 14px; color: #999">调用手机QQ</a> <a href="/tags/%E8%B0%83%E8%AF%95%E5%BE%AE%E4%BF%A1/" style="font-size: 14px; color: #999">调试微信</a> <a href="/tags/%E9%9D%99%E6%80%81%E5%BA%93/" style="font-size: 14px; color: #999">静态库</a>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget list'>
+  
+<header class='pure'>
+  <div><i class="fas fa-thumbs-up fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;强烈推荐</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="entry">
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/hexo.sh/" href="https://xaoxuu.com/wiki/hexo.sh/"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;Hexo脚本（Mac）
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://xaoxuu.com/wiki/vim-cn.sh/" href="https://xaoxuu.com/wiki/vim-cn.sh/"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;图床脚本（Mac）
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://yasuotu.com" href="https://yasuotu.com"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;图片在线压缩
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://realfavicongenerator.net" href="https://realfavicongenerator.net"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;生成Favicon
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="https://mxclub.github.io/resume/" href="https://mxclub.github.io/resume/"
+          
+          
+          >
+          <div class='name'>
+            
+              <i class=" fa-fw" aria-hidden="true"></i>
+            
+            &nbsp;&nbsp;简历主题
+          </div>
+          
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/mailto:me@xaoxuu.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/xaoxuu"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=63035382"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+  <div>
+    Use
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    as theme
+    
+      , 
+      total visits
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      times
+    
+    . 
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)' target="_blank" rel="noopener"></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

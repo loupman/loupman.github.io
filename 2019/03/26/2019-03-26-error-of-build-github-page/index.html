@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: iOS | Philip的个人博客</title>
+  <title>GitHub Pages域名解析报错 - Fastly error: unknown domain | Philip的个人博客</title>
   
   
 
@@ -44,7 +44,7 @@
   
   
   <div class="cover-wrapper">
-    <cover class='cover  half'>
+    <cover class='cover post half'>
       
         
   <h1 class='title'>Philip的博客</h1>
@@ -276,25 +276,11 @@
 
   <div class="l_body">
     <div class='body-wrapper'>
-      
-<div class='l_main'>
+      <div class='l_main'>
   
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
     
-      
-  <section class="post-list">
-    
-      
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
 
 
   <section class='meta'>
@@ -303,11 +289,13 @@
     <div class="meta" id="header-meta">
       
         
-  <h2 class="title">
-    <a href="/2017/07/15/2017-07-15-ios-autobuild-protobuf-file-into-project/">
-      自动编译PB文件，并添加到项目
-    </a>
-  </h2>
+  
+    <h1 class="title">
+      <a href="/2019/03/26/2019-03-26-error-of-build-github-page/">
+        GitHub Pages域名解析报错 - Fastly error: unknown domain
+      </a>
+    </h1>
+  
 
 
       
@@ -335,7 +323,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2017-07-15</p>
+    <p>2019-03-26</p>
   </a>
 </div>
 
@@ -345,11 +333,29 @@
             
   
   <div class='new-meta-item category'>
-    <a href='/categories/iOS/' rel="nofollow">
+    <a href='/categories/github-pages/' rel="nofollow">
       <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>iOS</p>
+      <p>github / pages</p>
     </a>
   </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
 
 
           
@@ -367,46 +373,193 @@
   </section>
 
 
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>项目中使用了<a href="https://github.com/google/protobuf.git" target="_blank" rel="noopener">Google ProtoBuf</a>, 每次后台新增PB文件的时候，前端都需要编译新增的PB，转化为<code>OC</code>文件，如果已经在项目中存在了，则需要去查找替换的已有的<code>Objective-C</code>文件。文件少可能直接搜索就可以了。但是新增的PB文件多了，项目大了，就比较难以管理，而且项目我们使用的<code>ARC</code>模式，但是PB文件需要<code>MRC</code>, 所以每次新增PB文件，不止要手动添加到项目中，而且需要手动给每个编译好的OC文件添加编译参数为<code>-fno-objc-arc</code>，确实有点麻烦。鉴于Pod可以管理项目文件，自动添加文件到项目中。所以研究了下Pod的更新项目的基本原理。编写了基于Ruby的脚本（Pod更新项目的脚本是基于Ruby的）。</p>
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>最近访问博客网站的时候，网站直接罢工了，给甩出如下错误。半天找不到头脑，but之前都是好好的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Fastly error: unknown domain: www.loupman.com. Please check that this domain has been added to a service.</span><br><span class="line"></span><br><span class="line">Details: cache-fra19145-FRA</span><br></pre></td></tr></table></figure>
+<p>那该如何解决呢？</p>
+<a id="more"></a>
+
+<p>之前域名解析的设置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类型type	 主机host	     指向points to	      TTL(Time To Live)</span><br><span class="line">A	       @	        github page的IP 地址	600</span><br><span class="line">CNAME	   www	        github page的网址	    600</span><br></pre></td></tr></table></figure>
+
+<p>修改为如下就可以了：</p>
+<p><img src="http://loupman.com/images/how-set-domain-dns-proxy.jpg" alt="正确✅ 域名解析设置"></p>
+<p>也就是说移除ip的解析，就可以访问正常了</p>
+<p><strong>PLUS</strong><br>自己购买绑定的域名通常没有SSL证书，这里介绍一个适合个人博客的免费的SSL证书网站<a href="https://www.cloudflare.com/" target="_blank" rel="noopener">Cloudflare</a>。可以免费通过HTTPS访问自己网站</p>
+<p>这里需要几点需要注意：<br>1、在Cloudflare官网注册。<br>如果是新注册用户，可以直接按指示添加网站，它会自动扫描DNS解析记录。如果不是新用户注意第二点和第三点</p>
+<p>2、添加域名解析，设置如下图<br>还是只是添加CNAME类型的解析即可，不需要添加ip解析了，否则会出错<br><img src="http://loupman.com/images/cloudfare-set-domain-proxy.jpg" alt="Cloudflare域名解析"></p>
+<p>点击“Add record”添加两条CNAME记录</p>
+<p>3、设置DNS服务器<br>在你购买的域名代理商控制台，更换DNS服务器，比如我的是阿里云万网代理商<br>设置如下图：<br><img src="http://loupman.com/images/how-to-set-dns-proxy.jpg" alt="DNS服务器设置"></p>
+
+      </div>
       
-        <div class="readmore">
-          <a href="/2017/07/15/2017-07-15-ios-autobuild-protobuf-file-into-project/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
-          </a>
-        </div>
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-26T15:10:27+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Nov 26, 2019</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/github/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>github</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>域名解析</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/03/26/2019-03-26-error-of-build-github-page/&title=GitHub Pages域名解析报错 - Fastly error: unknown domain | Philip的个人博客&summary=最近访问博客网站的时候，网站直接罢工了，给甩出如下错误。半天找不到头脑，but之前都是好好的
+123Fastly error: unknown domain: www.loupman.com. Please check that this domain has been added to a service.Details: cache-fra19145-FRA
+那该如何解决呢？"
+          
+          >
+          
+            <img src="http://loupman.com/images/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2019/03/26/2019-03-26-error-of-build-github-page/&title=GitHub Pages域名解析报错 - Fastly error: unknown domain | Philip的个人博客&summary=最近访问博客网站的时候，网站直接罢工了，给甩出如下错误。半天找不到头脑，but之前都是好好的
+123Fastly error: unknown domain: www.loupman.com. Please check that this domain has been added to a service.Details: cache-fra19145-FRA
+那该如何解决呢？"
+          
+          >
+          
+            <img src="http://loupman.com/images/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-wechat" title="微信" rel="external nofollow noopener noreferrer"
+          
+          >
+          
+            <img src="http://loupman.com/images/wechat.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/03/26/2019-03-26-error-of-build-github-page/&title=GitHub Pages域名解析报错 - Fastly error: unknown domain | Philip的个人博客&summary=最近访问博客网站的时候，网站直接罢工了，给甩出如下错误。半天找不到头脑，but之前都是好好的
+123Fastly error: unknown domain: www.loupman.com. Please check that this domain has been added to a service.Details: cache-fra19145-FRA
+那该如何解决呢？"
+          
+          >
+          
+            <img src="http://loupman.com/images/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
       
     </div>
-    
-      <div class="full-width auto-padding tags">
-        
-          <a href="/tags/iOS/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> iOS</a>
-        
-          <a href="/tags/protobuf/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> protobuf</a>
-        
-      </div>
-    
   </section>
-</article>
 
-          </div>
-        
+
       
-    
-  </section>
-  
-    
-    <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
-    
-    
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/2019/11/21/2019-11-21-how-crack-ipa-from-app-store/" rel="prev" title="ipa砸壳，frida，frida-ios-dump">
+                                
+                                    ipa砸壳，frida，frida-ios-dump
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/ipa%E7%A0%B8%E5%A3%B3/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> ipa砸壳</a> <a class="tag" href="/tags/%E8%B0%83%E8%AF%95%E5%BE%AE%E4%BF%A1/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 调试微信</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2019/02/13/2019-02-13-performselector-with-base-datatype-in-selector/" rel="prev" title="自定义同步调用的多个参数的m_performSelector">
+                                  
+                                      自定义同步调用的多个参数的m_performSelector
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/KVO/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> KVO</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
 
   
 
 
-    
-  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'GitHub Pages域名解析报错 - Fastly error: unknown domain',
+      tools: true
+    }
+  </script>
+
+
 </div>
 <aside class='l_side'>
   
@@ -490,6 +643,11 @@
           
         
           
+          
+            
+              
+
+            
           
         
           
@@ -706,6 +864,46 @@
 
 
             
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
           
         
           

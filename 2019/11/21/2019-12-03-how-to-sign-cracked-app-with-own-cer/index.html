@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>iOS－Realm 初试笔记 | Philip的个人博客</title>
+  <title>重签名，ipa重签名，砸壳App重签名 | Philip的个人博客</title>
   
   
 
@@ -291,8 +291,8 @@
         
   
     <h1 class="title">
-      <a href="/2016/09/01/2016-09-01-lets-try-realm/">
-        iOS－Realm 初试笔记
+      <a href="/2019/11/21/2019-12-03-how-to-sign-cracked-app-with-own-cer/">
+        重签名，ipa重签名，砸壳App重签名
       </a>
     </h1>
   
@@ -323,7 +323,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2016-09-01</p>
+    <p>2019-11-21</p>
   </a>
 </div>
 
@@ -375,71 +375,82 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <p>官网文档地址：<a href="https://realm.io/docs/objc/latest" target="_blank" rel="noopener">https://realm.io/docs/objc/latest</a><br>Realm牛刀小试，做下笔记。 主要针对Realm的增删改查。<br>Realm主要的作用就是对象持久化。以对象来持久化数据。<br>查看Realm数据库工具：<a href="https://itunes.apple.com/cn/app/realm-browser/id1007457278" target="_blank" rel="noopener">Realm Browser</a><br>之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。</p>
+        <p>重签名应用场景：</p>
+<ol>
+<li>在实际开发中，我们去Apple开发者账号上，申请的证书一般都是一年时间，但是我们的项目又能需要一直维护，于是乎我们备份的adhoc ipa包里面的证书自然会过期，那么即使可以把ipa文件安装进手机，也是无法启动的。启动现象是，启动还没有进入主界面就会闪退。我们就可以使用重签名技术，只是替换ipa包里面的证书，就又可以启动了。</li>
+<li>第三方平台，如爱思助手上是可以直接下载很多App的如微信，支付宝等，也是可以直接安装的，这种安装ipa包也是通过重签名得来的，而ipa包则是从AppStore上下载，然后砸壳的得来的</li>
+<li>无需越狱手机，就可以<code>Debug</code>任何App，例如<code>Debug</code>微信App</li>
+</ol>
 <a id="more"></a>
+<p>该文章主要是讲述如何手动重签名及其注意事项，也列举了涉及的命令和结果</p>
+<h1 id="前言：从AppStore上获取ipa"><a href="#前言：从AppStore上获取ipa" class="headerlink" title="前言：从AppStore上获取ipa"></a>前言：从AppStore上获取ipa</h1><h2 id="1、使用-Apple-Configurator-2"><a href="#1、使用-Apple-Configurator-2" class="headerlink" title="1、使用 Apple Configurator 2"></a>1、使用 Apple Configurator 2</h2><ol>
+<li>使用USB连接iPhone手机，并且选中设备</li>
+<li>点击顶部添加按钮，选择从AppStore上安装（会列举出当前这个appleid上的所有之前安装过或者要升级的App）</li>
+<li>选择App，并且点击添加</li>
+<li>这个时候，因为手机上已经装了这个应用，所以下载完之后，最后一步会提示是否替换，不要做任何操作，保持这个状态</li>
+<li><em>用Finder前往文件夹进到下面的路径</em><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/Library/Group Containers/K36BKF7T3D.group.com.apple.configurator/Library/Caches/Assets/TemporaryItems/MobileApps/</span><br></pre></td></tr></table></figure>
 
-<p>Demo中所有数据使用知乎的一个API（<a href="http://news-at.zhihu.com/api/4/news/latest）（来源网上）" target="_blank" rel="noopener">http://news-at.zhihu.com/api/4/news/latest）（来源网上）</a><br>// 数据模型 PLStory</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@interface PLStory :RLMObject</span><br><span class="line"></span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (strong, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// implementation</span><br><span class="line">@implementation PLStory</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>以上测试设备的软件信息为： Macos 10.14.5, Apple Configurator2</p>
+<h2 id="2、使用版本号为12-6-3的-iTunes"><a href="#2、使用版本号为12-6-3的-iTunes" class="headerlink" title="2、使用版本号为12.6.3的 iTunes"></a>2、使用版本号为<code>12.6.3</code>的 iTunes</h2><p>如果安装了最新版本（<code>12.9</code>），网上也有如何退回到<code>12.6</code>的文章，可以酌情尝试一番。当然也可以在Windows安装<code>12.6</code>进行试验。</p>
+<p><em>重申一下，这里重签名使用的已经砸壳的ipa包，<a href="http://loupman.com/2019/11/21/2019-11-21-how-crack-ipa-from-app-store/" target="_blank" rel="noopener">看这里获取砸壳ipa</a></em></p>
+<h1 id="1、删除无法签名的"><a href="#1、删除无法签名的" class="headerlink" title="1、删除无法签名的"></a>1、删除无法签名的</h1><p>删除 <em>Plugins</em> 和 <em>Watch</em>文件夹及其下面的所有插件，因为<code>普通开发者证书</code>是无法签名插件的</p>
+<h1 id="2、一些命令"><a href="#2、一些命令" class="headerlink" title="2、一些命令"></a>2、一些命令</h1><p>签名过程中，我们需要用到的一些命令</p>
+<h2 id="1、查看mac-o文件，是否加密了"><a href="#1、查看mac-o文件，是否加密了" class="headerlink" title="1、查看mac-o文件，是否加密了"></a>1、查看mac-o文件，是否加密了</h2><p>加密的App是无法重签名的，只有已经砸壳或者解密的App才可以重签名。通过<code>otool</code>命令可以查看我们拿到的ipa文件是否已经被砸壳了，以免做徒劳的无味的工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">otool -l xxx.app/xxx | grep cryp</span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  Payload otool -l WeChat.app/WeChat | grep crypt</span><br><span class="line">     cryptoff 16384</span><br><span class="line">    cryptsize 9043968</span><br><span class="line">      cryptid 1</span><br><span class="line">     cryptoff 16384</span><br><span class="line">    cryptsize 9781248</span><br><span class="line">      cryptid 1</span><br></pre></td></tr></table></figure>
+<p>cryptid: 加密方式的id，1 表示加密方式为1的加密；为0则表示已经砸壳，没有加密，可以重签名。</p>
+<h2 id="2、查看macho文件的架构"><a href="#2、查看macho文件的架构" class="headerlink" title="2、查看macho文件的架构"></a>2、查看macho文件的架构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file xxx.app/xxx</span><br></pre></td></tr></table></figure>
 
-<h3 id="增加数据"><a href="#增加数据" class="headerlink" title="增加数据"></a>增加数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for (PLStory *story in weakSelf.data) &#123;</span><br><span class="line">    RLMRealm *realm = [RLMRealm defaultRealm];</span><br><span class="line">    </span><br><span class="line">    __weak RLMRealm *rlm = realm;</span><br><span class="line">    [realm transactionWithBlock:^&#123;</span><br><span class="line">        [rlm addObject:story];</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  Payload file Mobile.app/Mobile</span><br><span class="line">Mobile.app/Mobile: Mach-O universal binary with 2 architectures: [arm_v7:Mach-O executable arm_v7] [arm64]</span><br><span class="line">Mobile.app/Mobile (for architecture armv7):	Mach-O executable arm_v7</span><br><span class="line">Mobile.app/Mobile (for architecture arm64):	Mach-O 64-bit executable arm64</span><br></pre></td></tr></table></figure>
 
-<p>如果需要已经存在的数据需要更新的，则可以使用API <code>addOrUpdateObject:</code> 或者 <code>addOrUpdateObjectsFromArray:</code> ，但是这两个API需要主键支持。 同时需要设置 <code>migrationBlock</code>。如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 1;</span><br><span class="line"></span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 必须重新设置`defaultConfiguration`</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br><span class="line"></span><br><span class="line">// 设置主键。 在 implementation 中实现</span><br><span class="line">+(NSString *)primaryKey</span><br><span class="line">&#123;</span><br><span class="line">    return @&quot;uid&quot;; // 返回需要设置主键的属性名字</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3、查看电脑安装的所有开发者证书"><a href="#3、查看电脑安装的所有开发者证书" class="headerlink" title="3、查看电脑安装的所有开发者证书"></a>3、查看电脑安装的所有开发者证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">security find-identity -v -p codesigning</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">➜  Payload security find-identity -v -p codesigning</span><br><span class="line">  1) DBE3E7789E012AF5871DE5CA1F39D17F0520AAF1 &quot;Mac Developer: jyqj9043@163.com (Z336U649GU)&quot;</span><br><span class="line">  2) 870EE0D72EF9E183B467DC76075936589CC77D92 &quot;iPhone Distribution: Hunan quan xiao quan Network Technology Co., Ltd. (Q3P6Q8CRP5)&quot; (CSSMERR_TP_CERT_REVOKED)</span><br><span class="line">  3) 4BB5C2897B2B3084763358C97AA1C4D92DC7F2CD &quot;iPhone Developer: 15232992117@163.com (9W578685NC)&quot;</span><br><span class="line">  4) 3005C5E99AC7CEF84187624356F02BF0089ABC27 &quot;iPhone Developer: Zhanrong Li (4F3G7F868X)&quot; (CSSMERR_TP_CERT_REVOKED)</span><br><span class="line">  5) BC9D938ED06AAF06486048195FA01CD3FC988B8D &quot;Apple Development: shuiqing xu (9W578685NC)&quot;</span><br><span class="line">  6) D277CC230E2DE8921B78A4F5C9F7B424271551B6 &quot;Apple Distribution: shuiqing xu (SS43WJS93F)&quot;</span><br><span class="line">  7) 09C610F0B27EFD51AF0443F19E779C91EB0988B1 &quot;Apple Distribution: Full gold dam (Shenzhen) science and Technology Co., Ltd. (JC3BTR66Q8)&quot; (CSSMERR_TP_CERT_REVOKED)</span><br><span class="line">  8) 7EBC3E24D522D67A87E098B93EA3575AAFDC6F78 &quot;Apple Distribution: Hunan quan xiao quan Network Technology Co., Ltd. (Q3P6Q8CRP5)&quot;</span><br><span class="line">  9) 62706A94E320917E8CE67E1BD9FDFC93F073B4C7 &quot;iPhone Developer: ling shi (CT77XGZ827)&quot;</span><br><span class="line"> 10) B41F84C217F7BC228483766DCF1E62B475DBB165 &quot;Apple Development: ling shi (CT77XGZ827)&quot;</span><br><span class="line"> 11) 6B9DAC7C0DD24E5581A60665704BAF00C308E214 &quot;Apple Development: jyqj9043@163.com (Z336U649GU)&quot;</span><br><span class="line"> 12) CD8D7E8C94E07024B6D1A25CD7B474FA5336FA6D &quot;Apple Distribution: Full gold dam (Shenzhen) science and Technology Co., Ltd. (JC3BTR66Q8)&quot;</span><br><span class="line">     12 valid identities found</span><br></pre></td></tr></table></figure>
 
-<p>可以看到，Realm不支持联合主键。但是可以新增加一个属性，值为联合主键的合并值。</p>
-<p>同时这牵扯到一个大问题。随着版本的迭代，需求的变动。这个类有可能需要增／删／改一些属性字段。则我们需要利用<code>migrationBlock</code>来更新。 同时如果有改动，则每次都需要更新  <code>RLMRealmConfiguration</code> 的 <code>schemaVersion</code>属性。 以下我列举了一些常用的更新schema的代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">// 以下代码都设置uid为主键</span><br><span class="line">// V1</span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (copy, nonatomic) NSString *images;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@property (assign, nonatomic) int type;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> V2  </span><br><span class="line"> 在V1的基础上变动： 改变字段 images 为 image ; 删除字段 type</span><br><span class="line"> **/</span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (copy, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// V2 对应的 Migration</span><br><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 2;</span><br><span class="line">        </span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line"></span><br><span class="line">	//没有及时更新APP。 当你的 schemaVersion＝4 时，用户还没有更新 schemaVersion＝2 的版本</span><br><span class="line">	/** </span><br><span class="line">	   images 字段名被更改为 image ；字段 type 被删除</span><br><span class="line">	**/</span><br><span class="line">    if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">        [migration enumerateObjects:PLStory.className block:^(RLMObject *oldObject, RLMObject *newObject) &#123;</span><br><span class="line">            if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">                newObject[@&quot;image&quot;] = oldObject[@&quot;images&quot;];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 这一句是关键，必须重新设置为默认设置</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> V3  </span><br><span class="line"> 增加一个对象</span><br><span class="line"> **/</span><br><span class="line">@interface PLFollower :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *name;</span><br><span class="line">@property (assign, nonatomic) int age;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">RLM_ARRAY_TYPE(PLFollower)</span><br><span class="line"></span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (strong, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@property (strong, nonatomic) RLMArray&lt;PLFollower&gt; *followers;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface PLStory :RLMObject</span><br><span class="line">@property (copy, nonatomic) NSString *title;</span><br><span class="line">@property (copy, nonatomic) NSString *image;</span><br><span class="line">@property (assign, nonatomic) long uid;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// V3 对应的Migration</span><br><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 3;</span><br><span class="line">        </span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line">    //没有及时更新APP。 当你的 schemaVersion＝4 时，用户还没有更新 schemaVersion＝3 的版本</span><br><span class="line">	/** </span><br><span class="line">	   images 字段名被更改为 image ；字段 type 被删除</span><br><span class="line">	**/</span><br><span class="line">    if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">        [migration enumerateObjects:PLStory.className block:^(RLMObject *oldObject, RLMObject *newObject) &#123;</span><br><span class="line">            if (oldSchemaVersion &lt; 2) &#123;</span><br><span class="line">                newObject[@&quot;image&quot;] = oldObject[@&quot;images&quot;];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    // schemaVersion = 3 新增加一个  followers 属性</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 这一句是关键，必须重新设置为默认设置</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br></pre></td></tr></table></figure>
+<h2 id="4、查看描述文件中的信息，获取权限文件"><a href="#4、查看描述文件中的信息，获取权限文件" class="headerlink" title="4、查看描述文件中的信息，获取权限文件"></a>4、查看描述文件中的信息，获取权限文件</h2><p>在我们的项目，设置好我们的<code>Team</code>证书和<code>Bundle Identifier</code>，获取项目的描述文件（<code>Provisioning Profile</code>）<br>或者在项目中的<code>Products</code>-&gt; <code>Show In Finder</code> -&gt; <code>WeChat.app</code> -&gt; <code>Show Content</code> 可以找到App里面的 <code>embedded.mobileprovision</code></p>
+<blockquote>
+<p>bundler Identifier最好使用比较合法的(不要有<code>-</code>等特殊符号)，项目的<code>Display Name</code>使用<code>WeChat</code>和正版微信的保持一致</p>
+</blockquote>
+<p>使用一下命令查看描述文件中的权限文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">security cms -D -i embedded.mobileprovision</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">   &lt;key&gt;Entitlements&lt;/key&gt;</span><br><span class="line">&lt;dict&gt;</span><br><span class="line"></span><br><span class="line">	&lt;key&gt;application-identifier&lt;/key&gt;</span><br><span class="line">	&lt;string&gt;E2QJ8EQ53Q.com.loupman.test&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">	&lt;key&gt;keychain-access-groups&lt;/key&gt;</span><br><span class="line">	&lt;array&gt;</span><br><span class="line">			&lt;string&gt;E2QJ8EQ53Q.*&lt;/string&gt;</span><br><span class="line">	&lt;/array&gt;</span><br><span class="line">		&lt;key&gt;get-task-allow&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">		&lt;key&gt;com.apple.developer.team-identifier&lt;/key&gt;</span><br><span class="line">	&lt;string&gt;E2QJ8EQ53Q&lt;/string&gt;</span><br><span class="line">&lt;/dict&gt;</span><br></pre></td></tr></table></figure>
+<p>描述文件中包含了entitlements的权限内容，这一段是我们所需要的，拷贝出来<br>新建一个plist文件，保存起来。需要能以plist文件正确查看的，用于签名整个App包<br>如下图：<br><img src="https://www.loupman.com/images/codesign-entitlement.jpg" alt="描述文件中的权限文件"></p>
+<h2 id="3、签名frameworks"><a href="#3、签名frameworks" class="headerlink" title="3、签名frameworks"></a>3、签名frameworks</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 查看macho的签名信息</span><br><span class="line">codesign -d -vv xxx.app</span><br></pre></td></tr></table></figure>
 
-<p>所以增加或者删除一个字段，则不需要做任何操作，但是更改一个字段名字，因为关联了之前的数据。所以需要做一些数据转换。</p>
-<p>Realm中，RLMObject提供了通过NSDictionary或者NSArray来增加或者更新数据。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)createOrUpdateInRealm:(RLMRealm *)realm withValue:(id)value</span><br><span class="line">+ (instancetype)createOrUpdateInDefaultRealmWithValue:(id)value</span><br><span class="line">+ (instancetype)createInRealm:(RLMRealm *)realm withValue:(id)value</span><br><span class="line">+ (instancetype)createInDefaultRealmWithValue:(id)value</span><br></pre></td></tr></table></figure>
-
-<p>支持数据为NSNull，如果数据为NSNull时，则更新数据为空。前面两个需要先设置主键</p>
-<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><p>删除数据时，必须放在 transactionWithBlock中，否者无法删除数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">RLMResults *res = [PLStory allObjects];</span><br><span class="line">NSMutableArray *arr = [@[] mutableCopy];</span><br><span class="line">for (PLStory *story in res) &#123;</span><br><span class="line">    if (story.uid == 8761556) &#123;</span><br><span class="line">        __weak RLMRealm *rlm = res.realm;</span><br><span class="line">        [rlm transactionWithBlock:^&#123;</span><br><span class="line">            [rlm deleteObject:story];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [arr addObject:story];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>或者 <code>deleteAllObjects</code> 删除所有数据。</p>
-<h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><p>更新时，必须放在 transactionWithBlock中，否者无法更新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">RLMResults *res = [PLStory allObjects];</span><br><span class="line">NSMutableArray *arr = [@[] mutableCopy];</span><br><span class="line">for (PLStory *story in res) &#123;</span><br><span class="line">    if (story.uid == 8761556) &#123;</span><br><span class="line">        [res.realm transactionWithBlock:^&#123;  //</span><br><span class="line">            story.title = @&quot;------changed-------&quot;;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    [arr addObject:story];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><p>查询一个对象的所有数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RLMResults&lt;PLStory *&gt; *res = [PLStory allObjects];</span><br></pre></td></tr></table></figure>
-
-<p>在项目有需要直接过滤写数据。Realm中使用了 <code>NSPredicate</code>作为参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 通过`where`语句 查询</span><br><span class="line">RLMResults&lt;PLStory *&gt; *stories = [PLStory objectsWhere:@&quot;uid = 8761556&quot;];</span><br><span class="line"></span><br><span class="line">// 使用 NSPredicate 查询</span><br><span class="line">NSPredicate *pred = [NSPredicate predicateWithFormat:@&quot;title BEGINSWITH ％@ AND image BEGINSWITH ％@&quot;,</span><br><span class="line">                                                     @&quot;好&quot;, @&quot;http:&quot;];</span><br><span class="line">stories = [PLStory objectsWithPredicate:pred];</span><br></pre></td></tr></table></figure>
-
-<p>官网上列举了查询的比较<br>Realm supports many common predicates:</p>
-<ul>
-<li>The comparison operands can be property names or constants. At least one of the operands must be a property name.</li>
-<li>The comparison operators ==, &lt;=, &lt;, &gt;=, &gt;, !=, and BETWEEN are supported for int, long, long long, float, double, and NSDate property types. Such as age == 45</li>
-<li>Identity comparisons ==, !=, e.g. [Employee objectsWhere:@”company == %@”, company]</li>
-<li>The comparison operators == and != are supported for boolean properties.</li>
-<li>For NSString and NSData properties, we support the ==, !=, BEGINSWITH, CONTAINS, and ENDSWITH operators, such as name CONTAINS ‘Ja’</li>
-<li>Case insensitive comparisons for strings, such as name CONTAINS[c] ‘Ja’. Note that only characters “A-Z” and “a-z” will be ignored for case.</li>
-<li>Realm supports the following compound operators: “AND”, “OR”, and “NOT”. Such as name BEGINSWITH ‘J’ AND age &gt;= 32</li>
-<li>The containment operand IN such as name IN {‘Lisa’, ‘Spike’, ‘Hachi’}</li>
-<li>Nil comparisons ==, !=, e.g. [Company objectsWhere:@”ceo == nil”]. Note that Realm treats nil as a special value rather than the absence of a value, so unlike with SQL nil equals itself.</li>
-<li>ANY comparisons, such as ANY student.age &lt; 21</li>
-<li>The aggregate expressions @count, @min, @max, @sum and @avg are supported on RLMArray and RLMResults properties, e.g. [Company objectsWhere:@”employees.@count &gt; 5”] to find all companies with more than five employees.</li>
-<li>Subqueries are supported with the following limitations:</li>
-<li>@count is the only operator that may be applied to the SUBQUERY expression.</li>
-<li>The SUBQUERY(…).@count expression must be compared with a constant.</li>
-<li>Correlated subqueries are not yet supported.</li>
-</ul>
-<p>详细参考：<a href="https://realm.io/docs/objc/latest/api/Classes/RLMObject.html#//api/name/objectsWhere:" target="_blank" rel="noopener">[RLMObject objectsWhere:]</a></p>
-<ul>
-<li>另外<br><code>RLMResults</code>是一个自动更新结果数据结构。 如下更改数据后，<code>RLMResults</code>会自动相应更新<br>例如：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RLMResults&lt;Dog *&gt; *puppies = [Dog objectsInRealm:realm where:@&quot;age &lt; 2&quot;];</span><br><span class="line">puppies.count; // =&gt; 0</span><br><span class="line"></span><br><span class="line">[realm transactionWithBlock:^&#123;</span><br><span class="line">  [Dog createInRealm:realm withValue:@&#123;@&quot;name&quot;: @&quot;Fido&quot;, @&quot;age&quot;: @1&#125;];</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">puppies.count; // =&gt; 1</span><br></pre></td></tr></table></figure>
-
-<p>遇到的错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016-09-06 11:23:21.596 TestRealm[6092:924914] *** Terminating app due to uncaught exception &apos;RLMException&apos;, reason: &apos;Migration is required due to the following errors:</span><br><span class="line">- Property &apos;uid&apos; has been made a primary key.&apos;</span><br></pre></td></tr></table></figure>
-
-<p>这个错误一般是要设置Migration</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.schemaVersion = 2;</span><br><span class="line">        </span><br><span class="line">config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) &#123;</span><br><span class="line">    NSLog(@&quot;Migration complete.&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 这一句是关键，必须重新设置为默认设置</span><br><span class="line">[RLMRealmConfiguration setDefaultConfiguration:config];</span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  Payload codesign -d -vv Mobile.app</span><br><span class="line">Executable=/Users/name/Desktop/Working/Payload/Mobile.app/Mobile</span><br><span class="line">Identifier=com.qxq.mobile</span><br><span class="line">Format=app bundle with Mach-O universal (armv7 arm64)</span><br><span class="line">CodeDirectory v=20500 size=167898 flags=0x0(none) hashes=2618+7 location=embedded</span><br><span class="line">Signature size=4390</span><br><span class="line">Authority=Apple iPhone OS Application Signing</span><br><span class="line">Authority=Apple iPhone Certification Authority</span><br><span class="line">Authority=Apple Root CA</span><br><span class="line">Info.plist entries=45</span><br><span class="line">TeamIdentifier=Q3P6Q8CRP5</span><br><span class="line">Sealed Resources version=2 rules=11 files=740</span><br><span class="line">Internal requirements count=1 size=96</span><br></pre></td></tr></table></figure>
 
 
-<p><a href="https://github.com/loupman/TestRealm.git" target="_blank" rel="noopener">项目链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 签名</span><br><span class="line">codesign -fs &quot;Apple Development: jyqj9043@163.com (Z336U649GU)&quot;  xxx.framework</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  Frameworks codesign -fs &quot;Apple Development: jyqj9043@163.com (Z336U649GU)&quot; ProtobufLite.framework</span><br><span class="line">ProtobufLite.framework: replacing existing signature</span><br></pre></td></tr></table></figure>
+
+<p>查看其证书可以看出，其签名信息已经被替换了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">➜  Frameworks codesign -d -vv ProtobufLite.framework</span><br><span class="line">Executable=/Users/lihua/Desktop/Working/Payload/WeChat.app/Frameworks/ProtobufLite.framework/ProtobufLite</span><br><span class="line">Identifier=com.test.ProtobufLite</span><br><span class="line">Format=bundle with Mach-O thin (arm64)</span><br><span class="line">CodeDirectory v=20400 size=1177 flags=0x0(none) hashes=30+3 location=embedded</span><br><span class="line">Signature size=4816</span><br><span class="line">Authority=Apple Development: jyqj9043@163.com (Z336U649GU)</span><br><span class="line">Authority=Apple Worldwide Developer Relations Certification Authority</span><br><span class="line">Authority=Apple Root CA</span><br><span class="line">Signed Time=Dec 3, 2019 at 11:41:56 AM</span><br><span class="line">Info.plist entries=21</span><br><span class="line">TeamIdentifier=E2QJ8EQ53Q</span><br><span class="line">Sealed Resources version=2 rules=10 files=4</span><br><span class="line">Internal requirements count=1 size=188</span><br></pre></td></tr></table></figure>
+
+<p>这有个讨巧的方法，使用以下命令，可以替换该文件夹下面所有的frameworks的签名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  Frameworks codesign -fs &quot;Apple Development: jyqj9043@163.com (Z336U649GU)&quot; ./*</span><br><span class="line">./OpenSSL.framework: replacing existing signature</span><br><span class="line">./ProtobufLite.framework: replacing existing signature</span><br><span class="line">./andromeda.framework: replacing existing signature</span><br><span class="line">./mars.framework: replacing existing signature</span><br><span class="line">./marsbridgenetwork.framework: replacing existing signature</span><br><span class="line">./matrixreport.framework: replacing existing signature</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="4、签名App"><a href="#4、签名App" class="headerlink" title="4、签名App"></a>4、签名App</h2><p>把描述文件中的entitlement权限文件拷贝到和WeChat.app同级别目录。 使用如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -fs &quot;Apple Development: jyqj9043@163.com (Z336U649GU)&quot; --no-strict --entitlements entitlements.plist WeChat.app</span><br></pre></td></tr></table></figure>
+<p>结果如下：<br><img src="https://www.loupman.com/images/codesign-resignapp.jpg" alt="重新签名App"></p>
+<h2 id="5、打包重签名的App"><a href="#5、打包重签名的App" class="headerlink" title="5、打包重签名的App"></a>5、打包重签名的App</h2><p>我们把WeChat.app重新签名，那么需要重新把WeChat.app打包成ipa这样才能安装到手机里</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 打包</span><br><span class="line">zip -ry WeChat.ipa Payload</span><br><span class="line">把文件夹 Payload 打包成 WeChat.ipa包</span><br></pre></td></tr></table></figure>
+
+<p>到这里我们就可以使用 爱思助手 去安装新签名的WeChat.ipa包了，去试试吧</p>
+<p>这里又遇到几个问题的：</p>
+<ol>
+<li>启动提示“不受信任的开发者” - 去设置-&gt;通用-&gt;描述文件与设备管理，去信任该开发者的描述文件</li>
+<li>启动就闪退了。检测Plugin和Watch有没有删除，检测framework和App的签名是否正确</li>
+<li>签名都正确还是闪退。先运行原来的功能到手机里面，在重新安装一次即可解决</li>
+</ol>
 
       </div>
       
@@ -451,10 +462,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-25T19:16:27+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-03T18:10:08+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>更新于 Nov 25, 2019</p>
+    <p>更新于 Dec 3, 2019</p>
   </a>
 </div>
 
@@ -463,7 +474,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>数据持久化</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Realm/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>Realm</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E8%B0%83%E8%AF%95%E5%BE%AE%E4%BF%A1/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>调试微信</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/App%E9%87%8D%E7%AD%BE%E5%90%8D/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>App重签名</p></a></div>
 
 
         
@@ -476,7 +487,12 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/09/01/2016-09-01-lets-try-realm/&title=iOS－Realm 初试笔记 | Philip的个人博客&summary=官网文档地址：https://realm.io/docs/objc/latestRealm牛刀小试，做下笔记。 主要针对Realm的增删改查。Realm主要的作用就是对象持久化。以对象来持久化数据。查看Realm数据库工具：Realm Browser之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/21/2019-12-03-how-to-sign-cracked-app-with-own-cer/&title=重签名，ipa重签名，砸壳App重签名 | Philip的个人博客&summary=重签名应用场景：
+
+在实际开发中，我们去Apple开发者账号上，申请的证书一般都是一年时间，但是我们的项目又能需要一直维护，于是乎我们备份的adhoc ipa包里面的证书自然会过期，那么即使可以把ipa文件安装进手机，也是无法启动的。启动现象是，启动还没有进入主界面就会闪退。我们就可以使用重签名技术，只是替换ipa包里面的证书，就又可以启动了。
+第三方平台，如爱思助手上是可以直接下载很多App的如微信，支付宝等，也是可以直接安装的，这种安装ipa包也是通过重签名得来的，而ipa包则是从AppStore上下载，然后砸壳的得来的
+无需越狱手机，就可以Debug任何App，例如Debug微信App
+"
           
           >
           
@@ -488,7 +504,12 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2016/09/01/2016-09-01-lets-try-realm/&title=iOS－Realm 初试笔记 | Philip的个人博客&summary=官网文档地址：https://realm.io/docs/objc/latestRealm牛刀小试，做下笔记。 主要针对Realm的增删改查。Realm主要的作用就是对象持久化。以对象来持久化数据。查看Realm数据库工具：Realm Browser之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2019/11/21/2019-12-03-how-to-sign-cracked-app-with-own-cer/&title=重签名，ipa重签名，砸壳App重签名 | Philip的个人博客&summary=重签名应用场景：
+
+在实际开发中，我们去Apple开发者账号上，申请的证书一般都是一年时间，但是我们的项目又能需要一直维护，于是乎我们备份的adhoc ipa包里面的证书自然会过期，那么即使可以把ipa文件安装进手机，也是无法启动的。启动现象是，启动还没有进入主界面就会闪退。我们就可以使用重签名技术，只是替换ipa包里面的证书，就又可以启动了。
+第三方平台，如爱思助手上是可以直接下载很多App的如微信，支付宝等，也是可以直接安装的，这种安装ipa包也是通过重签名得来的，而ipa包则是从AppStore上下载，然后砸壳的得来的
+无需越狱手机，就可以Debug任何App，例如Debug微信App
+"
           
           >
           
@@ -510,7 +531,12 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/09/01/2016-09-01-lets-try-realm/&title=iOS－Realm 初试笔记 | Philip的个人博客&summary=官网文档地址：https://realm.io/docs/objc/latestRealm牛刀小试，做下笔记。 主要针对Realm的增删改查。Realm主要的作用就是对象持久化。以对象来持久化数据。查看Realm数据库工具：Realm Browser之时初试Realm，难免会有问题，如有不足还请提出。不甚感激。"
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/21/2019-12-03-how-to-sign-cracked-app-with-own-cer/&title=重签名，ipa重签名，砸壳App重签名 | Philip的个人博客&summary=重签名应用场景：
+
+在实际开发中，我们去Apple开发者账号上，申请的证书一般都是一年时间，但是我们的项目又能需要一直维护，于是乎我们备份的adhoc ipa包里面的证书自然会过期，那么即使可以把ipa文件安装进手机，也是无法启动的。启动现象是，启动还没有进入主界面就会闪退。我们就可以使用重签名技术，只是替换ipa包里面的证书，就又可以启动了。
+第三方平台，如爱思助手上是可以直接下载很多App的如微信，支付宝等，也是可以直接安装的，这种安装ipa包也是通过重签名得来的，而ipa包则是从AppStore上下载，然后砸壳的得来的
+无需越狱手机，就可以Debug任何App，例如Debug微信App
+"
           
           >
           
@@ -538,16 +564,16 @@
                       <span class="art-item-left">
                           <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                           <h4>
-                              <a href="/2017/05/03/2017-05-03-ios-keychain-deviceid/" rel="prev" title="iOS10.3使用keychain存取deviceID">
+                              <a href="/2019/11/21/2019-11-21-how-crack-ipa-from-app-store/" rel="prev" title="ipa砸壳，frida，frida-ios-dump">
                                 
-                                    iOS10.3使用keychain存取deviceID
+                                    ipa砸壳，frida，frida-ios-dump
                                 
                               </a>
                           </h4>
                           
                               
                               <h6 class="tags">
-                                  <a class="tag" href="/tags/iOS10-3/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> iOS10.3</a> <a class="tag" href="/tags/keychain/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> keychain</a> <a class="tag" href="/tags/deviceId/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> deviceId</a> <a class="tag" href="/tags/uuid/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> uuid</a>
+                                  <a class="tag" href="/tags/ipa%E7%A0%B8%E5%A3%B3/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> ipa砸壳</a> <a class="tag" href="/tags/%E8%B0%83%E8%AF%95%E5%BE%AE%E4%BF%A1/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 调试微信</a>
                               </h6>
                           
                       </span>
@@ -558,16 +584,16 @@
                       <span class="art-item-right" aria-hidden="true">
                           <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                           <h4>
-                              <a href="/2016/08/22/2016-08-22-set-uitableviewcell-background-under-plain-mode/" rel="prev" title="UITableViewStylePlain下，UITableViewCell设置背景颜色没有效果">
+                              <a href="/2019/03/26/2019-03-26-error-of-build-github-page/" rel="prev" title="GitHub Pages域名解析报错 - Fastly error: unknown domain">
                                   
-                                      UITableViewStylePlain下，UITableViewCell设置背景颜色没有效果
+                                      GitHub Pages域名解析报错 - Fastly error: unknown domain
                                   
                               </a>
                           </h4>
                           
                               
                               <h6 class="tags">
-                                  <a class="tag" href="/tags/%E6%95%88%E6%9E%9C%E8%AE%BE%E7%BD%AE/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 效果设置</a> <a class="tag" href="/tags/UITableViewCell/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> UITableViewCell</a>
+                                  <a class="tag" href="/tags/github/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> github</a> <a class="tag" href="/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 域名解析</a>
                               </h6>
                           
                       </span>
@@ -597,7 +623,7 @@
 
   <script>
     window.subData = {
-      title: 'iOS－Realm 初试笔记',
+      title: '重签名，ipa重签名，砸壳App重签名',
       tools: true
     }
   </script>
@@ -699,7 +725,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#增加数据"><span class="toc-text">增加数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除数据"><span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新数据"><span class="toc-text">更新数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询数据"><span class="toc-text">查询数据</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言：从AppStore上获取ipa"><span class="toc-text">前言：从AppStore上获取ipa</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、使用-Apple-Configurator-2"><span class="toc-text">1、使用 Apple Configurator 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、使用版本号为12-6-3的-iTunes"><span class="toc-text">2、使用版本号为12.6.3的 iTunes</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1、删除无法签名的"><span class="toc-text">1、删除无法签名的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2、一些命令"><span class="toc-text">2、一些命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看mac-o文件，是否加密了"><span class="toc-text">1、查看mac-o文件，是否加密了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看macho文件的架构"><span class="toc-text">2、查看macho文件的架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看电脑安装的所有开发者证书"><span class="toc-text">3、查看电脑安装的所有开发者证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、查看描述文件中的信息，获取权限文件"><span class="toc-text">4、查看描述文件中的信息，获取权限文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、签名frameworks"><span class="toc-text">3、签名frameworks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、签名App"><span class="toc-text">4、签名App</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、打包重签名的App"><span class="toc-text">5、打包重签名的App</span></a></li></ol></li></ol>
     </div>
   </section>
 

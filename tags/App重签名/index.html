@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: iOS闪退 | Philip的个人博客</title>
+  <title>Tag: App重签名 | Philip的个人博客</title>
   
   
 
@@ -304,8 +304,8 @@
       
         
   <h2 class="title">
-    <a href="/2016/04/11/2016-04-11-ios-symbolicatecrash/">
-      iOS闪退(崩溃)手动符号化解析
+    <a href="/2019/11/21/2019-12-03-how-to-sign-cracked-app-with-own-cer/">
+      重签名，ipa重签名，砸壳App重签名
     </a>
   </h2>
 
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2016-04-11</p>
+    <p>2019-11-21</p>
   </a>
 </div>
 
@@ -369,10 +369,15 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p>解决闪退（崩溃）问题是移动应用开发者必备技能之一。<br>解决闪退可以分为线上和线下两种。线下（开发阶段）遇到闪退，可以直接DEBUG重现闪退。这个比较好解决。<br>但是线上APP的闪退，我们则只能收集闪退日志来分析。所有有可能会使用第三方闪退日志收集平台（如友盟等）或者直接使用AppStore的app分析也比较直接方便的。但是往往线上解析的crashLog并没有达到我的预期，没有完全解析出来（只有一个地址）。</p>
+      <p>重签名应用场景：</p>
+<ol>
+<li>在实际开发中，我们去Apple开发者账号上，申请的证书一般都是一年时间，但是我们的项目又能需要一直维护，于是乎我们备份的adhoc ipa包里面的证书自然会过期，那么即使可以把ipa文件安装进手机，也是无法启动的。启动现象是，启动还没有进入主界面就会闪退。我们就可以使用重签名技术，只是替换ipa包里面的证书，就又可以启动了。</li>
+<li>第三方平台，如爱思助手上是可以直接下载很多App的如微信，支付宝等，也是可以直接安装的，这种安装ipa包也是通过重签名得来的，而ipa包则是从AppStore上下载，然后砸壳的得来的</li>
+<li>无需越狱手机，就可以<code>Debug</code>任何App，例如<code>Debug</code>微信App</li>
+</ol>
       
         <div class="readmore">
-          <a href="/2016/04/11/2016-04-11-ios-symbolicatecrash/" class="flat-box">
+          <a href="/2019/11/21/2019-12-03-how-to-sign-cracked-app-with-own-cer/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
             阅读全文
           </a>
@@ -382,13 +387,9 @@
     
       <div class="full-width auto-padding tags">
         
-          <a href="/tags/%E6%89%8B%E5%8A%A8%E7%AC%A6%E5%8F%B7%E5%8C%96/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 手动符号化</a>
+          <a href="/tags/%E8%B0%83%E8%AF%95%E5%BE%AE%E4%BF%A1/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 调试微信</a>
         
-          <a href="/tags/iOS%E9%97%AA%E9%80%80/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> iOS闪退</a>
-        
-          <a href="/tags/iOS%E5%B4%A9%E6%BA%83/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> iOS崩溃</a>
-        
-          <a href="/tags/iOS-Crash/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> iOS Crash</a>
+          <a href="/tags/App%E9%87%8D%E7%AD%BE%E5%90%8D/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> App重签名</a>
         
       </div>
     
